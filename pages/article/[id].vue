@@ -371,6 +371,23 @@ config({
         border-radius: 10px;
         padding: 20px 0;
 
+        &::-webkit-scrollbar {
+          width: 12px;
+          height: 12px;
+          background: transparent;
+        }
+
+        &::-webkit-scrollbar-corner {
+          width: 0px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          border-radius: 6px;
+          border: 4px solid transparent;
+          background-clip: content-box;
+          background-color: var(--td-scrollbar-color);
+        }
+
         .article-id-right-box-anchor-1 {
           padding-left: 8px;
         }
