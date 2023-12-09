@@ -144,6 +144,8 @@ const register = async () => {
     })
     MessagePlugin.closeAll()
     MessagePlugin.success(`${res.data.userName}, 欢迎回来`)
+    // 查询站内消息
+    getMessageNumData()
     router.replace('/center')
   } else {
     MessagePlugin.success('注册成功')
