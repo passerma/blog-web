@@ -75,7 +75,7 @@ const dealComment = (data: BlogComment[]) => {
       element.comment_img = imgsUrl.join('_')
     }
     // 处理头像
-    if (element.user_id !== 0 && !element.avatar) {
+    if (element.user_id !== null && !element.avatar) {
       element.avatar = 'https://www.passerma.com/down/morenAvatar.png'
     }
     commentNamesT[element.id.toString()] = element.user_name || element.user
@@ -147,7 +147,7 @@ onUpdated(() => {
         全部评论 <span>{{ commentLen }}</span>
       </div>
       <div v-for="(item, index) in comment" :key="item.id" class="article-comment-item" :id="`comment-${item.id}`">
-        <t-popup showArrow destroyOnClose :delay="100" :disabled="item.user_id === 0" placement="right-top">
+        <t-popup showArrow destroyOnClose :delay="100" :disabled="item.user_id === null" placement="right-top">
           <t-avatar size="40px" :image="item.avatar || null" style="cursor: pointer;">
             {{ item.user[0] }}
           </t-avatar>
@@ -162,7 +162,7 @@ onUpdated(() => {
         </t-popup>
         <div class="article-comment-item-content">
           <div class="article-comment-item-content-name">
-            <t-popup showArrow destroyOnClose :delay="100" :disabled="item.user_id === 0" placement="right-top">
+            <t-popup showArrow destroyOnClose :delay="100" :disabled="item.user_id === null" placement="right-top">
               <span style="cursor: pointer;">{{ item.user_name || item.user }}</span>
               <template #content>
                 <div class="article-comment-user-info">
@@ -181,13 +181,13 @@ onUpdated(() => {
               <ChatAddIcon />
               回复
             </span>
-            <span v-if="item.user_id !== 0 && useUserInfo.userInfo.userId === item.user_id"
+            <span v-if="item.user_id !== null && useUserInfo.userInfo.userId === item.user_id"
               class="article-comment-item-content-more-re" @click="editComment(item.id, item.comment, item.comment_img)">
               <EditIcon />
               修改
             </span>
             <t-popconfirm theme="warning" content="评论删除后无法恢复，确认删除吗" @confirm="delComment(item.id)">
-              <span v-if="item.user_id !== 0 && useUserInfo.userInfo.userId === item.user_id"
+              <span v-if="item.user_id !== null && useUserInfo.userInfo.userId === item.user_id"
                 class="article-comment-item-content-more-re">
                 <DeleteIcon />
                 删除
@@ -220,7 +220,7 @@ onUpdated(() => {
               :update-comment="getcomment" :close-comment="closeComment" />
           </div>
           <div v-for="item2 in item.child" :key="item2.id" class="article-comment-item-child" :id="`comment-${item2.id}`">
-            <t-popup showArrow destroyOnClose :delay="100" :disabled="item2.user_id === 0" placement="right-top">
+            <t-popup showArrow destroyOnClose :delay="100" :disabled="item2.user_id === null" placement="right-top">
               <t-avatar size="40px" :image="item2.avatar || null" style="cursor: pointer;">
                 {{ item2.user[0] }}
               </t-avatar>
@@ -235,7 +235,7 @@ onUpdated(() => {
             </t-popup>
             <div class="article-comment-item-content">
               <div class="article-comment-item-content-name">
-                <t-popup showArrow destroyOnClose :delay="100" :disabled="item2.user_id === 0" placement="right-top">
+                <t-popup showArrow destroyOnClose :delay="100" :disabled="item2.user_id === null" placement="right-top">
                   <span style="cursor: pointer;">{{ item2.user_name || item2.user }}</span>
                   <template #content>
                     <div class="article-comment-user-info">
@@ -256,7 +256,7 @@ onUpdated(() => {
                   <ChatAddIcon />
                   回复
                 </span>
-                <span v-if="item2.user_id !== 0 && useUserInfo.userInfo.userId === item2.user_id"
+                <span v-if="item2.user_id !== null && useUserInfo.userInfo.userId === item2.user_id"
                   class="article-comment-item-content-more-re" @click="
                     editComment(item2.id, item2.comment, item2.comment_img)
                     ">
@@ -264,7 +264,7 @@ onUpdated(() => {
                   修改
                 </span>
                 <t-popconfirm theme="warning" content="评论删除后无法恢复，确认删除吗" @confirm="delComment(item2.id)">
-                  <span v-if="item2.user_id !== 0 && useUserInfo.userInfo.userId === item2.user_id"
+                  <span v-if="item2.user_id !== null && useUserInfo.userInfo.userId === item2.user_id"
                     class="article-comment-item-content-more-re">
                     <DeleteIcon />
                     删除

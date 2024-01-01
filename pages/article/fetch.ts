@@ -23,7 +23,7 @@ export type BlogComment = {
   comment: string
   comment_img: string
   avatar: string
-  user_id: number
+  user_id: number | null
   location: string
   introduction: string
   created_at: string
