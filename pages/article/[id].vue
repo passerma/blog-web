@@ -121,23 +121,6 @@ const setCommentNum = (num: number) => {
 }
 
 /**
- * 图片预览
- * @param imgList 图片列表
- * @param nowImgIndex 索引
- */
-const imageClick = (imgList: string[], nowImgIndex: number) => {
-  // if (imgList.length > 1) {
-  //   this.$hevueImgPreview({
-  //     multiple: true,
-  //     nowImgIndex,
-  //     imgList
-  //   })
-  // } else {
-  //   this.$hevueImgPreview(imgList[nowImgIndex])
-  // }
-}
-
-/**
  * 获取文章操作
  */
 const getOperate = async () => {
