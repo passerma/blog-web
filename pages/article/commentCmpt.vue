@@ -164,11 +164,13 @@ onUpdated(() => {
           <div class="article-comment-item-content-name">
             <t-popup showArrow destroyOnClose :delay="100" :disabled="item.user_id === null" placement="right-top">
               <span style="cursor: pointer;">{{ item.user_name || item.user }}</span>
+
               <template #content>
                 <div class="article-comment-user-info">
                   <img :src="item.avatar" />
                   <div class="info-introduction">{{ item.introduction }}</div>
-                  <t-link theme="primary" hover="color" target="_blank" :href="`/info?u=${item.user_id}`" underline> 前往主页
+                  <t-link theme="primary" hover="color" target="_blank" :href="`/info?u=${item.user_id}`" underline>
+                    前往主页
                   </t-link>
                 </div>
               </template>
@@ -182,7 +184,8 @@ onUpdated(() => {
               回复
             </span>
             <span v-if="item.user_id !== null && useUserInfo.userInfo.userId === item.user_id"
-              class="article-comment-item-content-more-re" @click="editComment(item.id, item.comment, item.comment_img)">
+              class="article-comment-item-content-more-re"
+              @click="editComment(item.id, item.comment, item.comment_img)">
               <EditIcon />
               修改
             </span>
@@ -196,6 +199,7 @@ onUpdated(() => {
           </div>
           <div v-if="item.comment_img" class="article-comment-item-img-box">
             <t-image-viewer v-for="img in item.comment_img.split('_')" :key="img" :images="[img]">
+
               <template #trigger="{ open }">
                 <div class="box-item">
                   <img alt="图片" :src="img" />
@@ -207,28 +211,31 @@ onUpdated(() => {
             </t-image-viewer>
           </div>
           <div :class="item.child.length > 0
-            ? 'article-comment-item-content-text article-comment-item-content-text-border'
-            : 'article-comment-item-content-text'
-            ">
+      ? 'article-comment-item-content-text article-comment-item-content-text-border'
+      : 'article-comment-item-content-text'
+      ">
             {{ item.comment }}
           </div>
           <div v-show="item.id === editId" :class="item.child.length === 0 && index === comment.length - 1
-            ? 'article-comment-item-content-form article-comment-item-content-form-border'
-            : 'article-comment-item-content-form'
-            ">
+      ? 'article-comment-item-content-form article-comment-item-content-form-border'
+      : 'article-comment-item-content-form'
+      ">
             <AddCommentCmpt :ref="(el) => setCommentRef(el, `comment_${item.id}`)" :to-user="item.id" :parent="item.id"
               :update-comment="getcomment" :close-comment="closeComment" />
           </div>
-          <div v-for="item2 in item.child" :key="item2.id" class="article-comment-item-child" :id="`comment-${item2.id}`">
+          <div v-for="item2 in item.child" :key="item2.id" class="article-comment-item-child"
+            :id="`comment-${item2.id}`">
             <t-popup showArrow destroyOnClose :delay="100" :disabled="item2.user_id === null" placement="right-top">
               <t-avatar size="40px" :image="item2.avatar || null" style="cursor: pointer;">
                 {{ item2.user[0] }}
               </t-avatar>
+
               <template #content>
                 <div class="article-comment-user-info">
                   <img :src="item2.avatar" />
                   <div class="info-introduction">{{ item2.introduction }}</div>
-                  <t-link theme="primary" hover="color" target="_blank" :href="`/info?u=${item2.user_id}`" underline> 前往主页
+                  <t-link theme="primary" hover="color" target="_blank" :href="`/info?u=${item2.user_id}`" underline>
+                    前往主页
                   </t-link>
                 </div>
               </template>
@@ -237,18 +244,20 @@ onUpdated(() => {
               <div class="article-comment-item-content-name">
                 <t-popup showArrow destroyOnClose :delay="100" :disabled="item2.user_id === null" placement="right-top">
                   <span style="cursor: pointer;">{{ item2.user_name || item2.user }}</span>
+
                   <template #content>
                     <div class="article-comment-user-info">
                       <img :src="item2.avatar" />
                       <div class="info-introduction">{{ item2.introduction }}</div>
-                      <t-link theme="primary" hover="color" target="_blank" :href="`/info?u=${item2.user_id}`" underline>
+                      <t-link theme="primary" hover="color" target="_blank" :href="`/info?u=${item2.user_id}`"
+                        underline>
                         前往主页
                       </t-link>
                     </div>
                   </template>
                 </t-popup>
                 <t-tag v-if="item2.location !== ''" theme="success" variant="light" size="small">{{ item2.location
-                }}</t-tag>
+                  }}</t-tag>
               </div>
               <div class="article-comment-item-content-more">
                 {{ dayjs(item2.created_at).format("YYYY-MM-DD HH:mm") }}
@@ -258,8 +267,8 @@ onUpdated(() => {
                 </span>
                 <span v-if="item2.user_id !== null && useUserInfo.userInfo.userId === item2.user_id"
                   class="article-comment-item-content-more-re" @click="
-                    editComment(item2.id, item2.comment, item2.comment_img)
-                    ">
+      editComment(item2.id, item2.comment, item2.comment_img)
+      ">
                   <EditIcon />
                   修改
                 </span>
@@ -273,9 +282,9 @@ onUpdated(() => {
               </div>
               <div class="article-comment-item-content-text">
                 <span class="text-re" v-if="item2.parent &&
-                  item2.parent !== item2.to_user &&
-                  commentNames[item2.parent]
-                  " @mouseenter="() => reCommentMouse(item2.parent, 'enter')"
+      item2.parent !== item2.to_user &&
+      commentNames[item2.parent]
+      " @mouseenter="() => reCommentMouse(item2.parent, 'enter')"
                   @mouseleave="() => reCommentMouse(item2.parent, 'leave')">
                   {{ `@${commentNames[item2.parent]}` }}
                   <br />
@@ -284,6 +293,7 @@ onUpdated(() => {
               </div>
               <div v-if="item2.comment_img" class="article-comment-item-img-box">
                 <t-image-viewer v-for="img in item2.comment_img.split('_')" :key="img" :images="[img]">
+
                   <template #trigger="{ open }">
                     <div class="box-item">
                       <img alt="图片" :src="img" />

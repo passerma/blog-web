@@ -46,6 +46,7 @@ const qrLoginCmptRef = ref<typeof QrLoginCmpt>()
 const userInfo = UseUserInfoStore()
 const message = UseMessageStore()
 const router = useRouter()
+const route = useRoute()
 
 let nextTime = 60
 let timer: NodeJS.Timeout
@@ -146,7 +147,15 @@ const register = async () => {
     MessagePlugin.success(`${res.data.userName}, 欢迎回来`)
     // 查询站内消息
     getMessageNumData()
-    router.replace('/center')
+    const to = route.query.to as string
+    if (to) {
+      navigateTo({
+        path: to,
+        replace: true
+      })
+    } else {
+      router.replace('/center')
+    }
   } else {
     MessagePlugin.success('注册成功')
     changeFunc()
@@ -277,7 +286,15 @@ const login = async () => {
   })
   MessagePlugin.closeAll()
   MessagePlugin.success(`${req2.data.userName}, 欢迎回来`)
-  router.replace('/center')
+  const to = route.query.to as string
+  if (to) {
+    navigateTo({
+      path: to,
+      replace: true
+    })
+  } else {
+    router.replace('/center')
+  }
 }
 
 const enterLogin = (e: KeyboardEvent) => {
@@ -315,22 +332,26 @@ onBeforeUnmount(() => {
           </template>
         </t-input>
         <t-input v-model="zcData.email" class="form__input" placeholder="请输入邮箱">
+
           <template #prefix-icon>
             <MailIcon />
           </template>
         </t-input>
         <t-input v-model="zcData.pass" type="password" class="form__input" placeholder="请输入密码">
+
           <template #prefix-icon>
             <LockOnIcon />
           </template>
         </t-input>
         <t-input v-model="zcData.passRe" type="password" class="form__input" placeholder="请确认输入密码">
+
           <template #prefix-icon>
             <LockOnIcon />
           </template>
         </t-input>
         <div class="authCode">
           <t-input v-model="zcData.code" class="form__input" placeholder="请确认输入验证码">
+
             <template #prefix-icon>
               <PreciseMonitorIcon />
             </template>
@@ -351,6 +372,7 @@ onBeforeUnmount(() => {
           <LogoWechatIcon @click="QRlogin" class="form__icon" />
         </div>
         <span class="form__span" v-show="!isShowFogetPass">或者使用邮箱用户</span>
+
         <template v-if="!isShowFogetPass">
           <t-input v-model="dlData.name" class="form__input" placeholder="请输入用户名或邮箱">
             <template #prefix-icon>
@@ -358,6 +380,7 @@ onBeforeUnmount(() => {
             </template>
           </t-input>
           <t-input v-model="dlData.pass" type="password" class="form__input" placeholder="请输入密码">
+
             <template #prefix-icon>
               <LockOnIcon />
             </template>
@@ -367,6 +390,7 @@ onBeforeUnmount(() => {
             登录
           </t-button>
         </template>
+
         <template v-else>
           <t-input v-model="forgetData.email" class="form__input" placeholder="请输入邮箱">
             <template #prefix-icon>
@@ -374,17 +398,20 @@ onBeforeUnmount(() => {
             </template>
           </t-input>
           <t-input v-model="forgetData.pass" type="password" class="form__input" placeholder="请输入密码">
+
             <template #prefix-icon>
               <LockOnIcon />
             </template>
           </t-input>
           <t-input v-model="forgetData.passRe" type="password" class="form__input" placeholder="请输入确认密码">
+
             <template #prefix-icon>
               <LockOnIcon />
             </template>
           </t-input>
           <div class="authCode">
             <t-input v-model="forgetData.code" class="form__input" placeholder="请确认输入验证码">
+
               <template #prefix-icon>
                 <PreciseMonitorIcon />
               </template>

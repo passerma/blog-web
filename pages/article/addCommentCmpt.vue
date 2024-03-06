@@ -7,6 +7,7 @@ import { MessagePlugin } from 'tdesign-vue-next';
 
 const userInfoStore = UseUserInfoStore()
 const route = useRoute()
+const router = useRouter()
 
 const props = defineProps({
   isBlog: {
@@ -162,8 +163,38 @@ const setCommentV = (v: string, idV: number, img: string) => {
   }
 }
 
+const toLogin = (e: Event) => {
+  e.stopPropagation()
+  e.preventDefault()
+  navigateTo({
+    path: '/login',
+    query: {
+      to: `/article/${route.params.id}`
+    },
+    replace: true
+    // state: {
+    //   user: userName.value,
+    //   value: commentV.value
+    // }
+  })
+  return
+}
+
 defineExpose({
   setCommentV
+})
+
+onMounted(() => {
+  // if (router.options?.history?.state) {
+  //   const user = router.options.history.state.user as string
+  //   const value = router.options.history.state.value as string
+  //   if (user) {
+  //     userName.value = user
+  //   }
+  //   if (value) {
+  //     commentV.value = value
+  //   }
+  // }
 })
 </script>
 
@@ -180,7 +211,14 @@ defineExpose({
       <span v-if="!isBlog" class="article-comment-form-close" @click="closeComment()">关闭</span>
     </div>
     <div class="article-comment-form-text">
-      <t-textarea v-model="commentV" placeholder="请输入评论" />
+      <t-textarea v-model="commentV" placeholder="请输入评论">
+
+        <template #tips>
+          <span v-show="userInfoStore.userInfo.userName === ''">
+            登录用户可以收到回复的邮件提醒哦<a @click="toLogin" class="t-link" theme="primary" underline target="_self">前往登录/注册 ➡️</a>
+          </span>
+        </template>
+      </t-textarea>
       <div class="article-comment-form-upload-imgbox">
         <div v-for="item, index in files" class="article-comment-form-upload-img">
           <img :src="item">
@@ -239,6 +277,47 @@ defineExpose({
     textarea {
       height: 80px !important;
     }
+
+    :deep(.t-textarea__info_wrapper) {
+      margin: 0;
+      margin-bottom: 5px;
+      min-height: 5px;
+
+      .t-textarea__tips {
+        margin: 0;
+        padding: 0;
+        min-height: unset;
+        color: var(--td-warning-color);
+        font: var(--td-font-link-medium);
+
+        a {
+          margin-left: 8px;
+          margin-top: 5px;
+          color: var(--td-brand-color);
+          display: inline-flex;
+          cursor: pointer;
+          align-items: center;
+          position: relative;
+          text-decoration: none;
+          outline: none;
+          padding: 0;
+          transition: all 0.2s linear;
+          font: var(--td-font-link-medium);
+
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 0;
+            bottom: 0;
+            opacity: 1;
+            border-bottom: 1px solid var(--td-brand-color);
+            transition: all 0.2s linear;
+          }
+        }
+      }
+    }
   }
 
   .article-comment-form-upload-imgbox {
@@ -288,7 +367,6 @@ defineExpose({
   }
 
   .article-comment-form-upload {
-    margin-top: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;

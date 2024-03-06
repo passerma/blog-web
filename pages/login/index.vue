@@ -7,7 +7,7 @@ const router = useRouter()
 
 watch(() => userInfo.userInfo.userId, (v) => {
   if (v) {
-    router.push('/center')
+    router.replace('/center')
   }
 })
 </script>

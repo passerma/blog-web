@@ -12,6 +12,7 @@ const tips = ref('')
 const userInfo = UseUserInfoStore()
 const message = UseMessageStore()
 const router = useRouter()
+const route = useRoute()
 
 let timer: NodeJS.Timeout | undefined
 let scene = ''
@@ -56,7 +57,15 @@ const getQRCodeType = () => {
             hasCode = false
             getMessageNumData()
             MessagePlugin.success(`${res.data.userName}, 欢迎回来`)
-            router.replace('/center')
+            const to = route.query.to as string
+            if (to) {
+              navigateTo({
+                path: to,
+                replace: true
+              })
+            } else {
+              router.replace('/center')
+            }
           } else {
             MessagePlugin.error('登录失败')
           }
@@ -106,9 +115,9 @@ defineExpose({
 <template>
   <t-dialog header="微信扫一扫" :closeOnOverlayClick="false" :closeBtn="false" :visible.sync="visible" :cancelBtn="null"
     :confirmBtn="{
-      content: '关闭',
-      variant: 'base',
-    }" :onConfirm="close">
+    content: '关闭',
+    variant: 'base',
+  }" :onConfirm="close">
     <div class="qrlogin-main">
       <t-loading size="large" :loading="!url" showOverlay>
         <img v-if="url" :src="'data:image/png;base64,' + url" />
