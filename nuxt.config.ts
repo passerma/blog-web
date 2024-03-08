@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -45,7 +46,7 @@ export default defineNuxtConfig({
       proxy: {
         '/api/': {
           target: 'http://127.0.0.1:4000',
-          rewrite(path) {
+          rewrite(path: string) {
             return path.replace(/^\/api\//, '')
           },
         },

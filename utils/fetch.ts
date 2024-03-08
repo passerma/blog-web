@@ -9,6 +9,7 @@ export interface resType<T> {
 }
 
 const server = process.server // 是否服务端发起请求
+const serverUrl = process.env.server_url || 'http://127.0.0.1:4000'
 let authorization = '' // 请求token
 let keepTokenTimer: any = 0 // token刷新定时器
 
@@ -56,7 +57,7 @@ export default function Fetch<T = any>(
   path = path.startsWith('/') ? path : `/${path}`
   return new Promise<null | resType<T>>((resolve) => {
     const obj = {
-      url: server ? `http://127.0.0.1:4000${path}` : `/api${path}`,
+      url: server ? `${serverUrl}${path}` : `/api${path}`,
       method,
       params,
       data,
