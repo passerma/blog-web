@@ -53,6 +53,9 @@ export default defineNuxtConfig({
         '/img/': 'http://106.14.184.137:4002',
         '/cdn.nlark.com/': 'http://127.0.0.1:4003'
       }
+    },
+    define: {
+      'process.env.generate_time': JSON.stringify(process.env.generate_time || ''),
     }
   },
   experimental: {
