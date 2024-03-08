@@ -7,6 +7,7 @@ const useMessage = UseMessageStore()
 const themeStore = UseThemeStore()
 const route = useRoute()
 const themeModeV = ref('')
+const generateTime = ref(process.env.generate_time ?? '')
 
 onMounted(() => {
   themeModeV.value = window.localStorage.getItem('theme-mode') ? 'dark' : 'light'
@@ -86,6 +87,9 @@ watch(() => route.path, (v) => {
       <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33011802001747" rel="noopener noreferrer"
         target="_blank">浙公网安备33011802001747号</a>
     </div>
+    <div class="header-box-info">
+      <span>构建时间: {{ generateTime }}</span>
+    </div>
   </div>
 </template>
 
@@ -99,6 +103,7 @@ watch(() => route.path, (v) => {
   align-items: flex-start;
   overflow: auto;
   flex-shrink: 0;
+  position: relative;
 
   .header-box {
     width: 185px;
@@ -226,6 +231,18 @@ watch(() => route.path, (v) => {
     .t-icon {
       font-size: 20px;
       transform: translateY(-1px);
+    }
+  }
+
+  .header-box-info {
+    position: absolute;
+    width: 100%;
+    bottom: 5px;
+    text-align: center;
+
+    span {
+      font-size: 20px;
+      zoom: 0.5;
     }
   }
 }
