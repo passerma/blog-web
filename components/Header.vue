@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { LogoGithubIcon, MailIcon, BugIcon, LogoWechatStrokeIcon, SunnyIcon, MoonIcon } from 'tdesign-icons-vue-next';
 import { UseUserInfoStore, UseMessageStore, UseThemeStore } from 'stores'
+import { generateTime } from '~/utils/globalFunc'
 
 const userInfo = UseUserInfoStore().userInfo
 const useMessage = UseMessageStore()
 const themeStore = UseThemeStore()
 const route = useRoute()
 const themeModeV = ref('')
-const generateTime = ref(process.env.generate_time ?? '')
 
 onMounted(() => {
   themeModeV.value = window.localStorage.getItem('theme-mode') ? 'dark' : 'light'
@@ -88,7 +88,7 @@ watch(() => route.path, (v) => {
         target="_blank">浙公网安备33011802001747号</a>
     </div>
     <div class="header-box-info">
-      <span>构建时间: {{ generateTime }}</span>
+      <span v-show="generateTime !== ''">构建时间: {{ generateTime }}</span>
     </div>
   </div>
 </template>
