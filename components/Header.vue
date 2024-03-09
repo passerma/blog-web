@@ -235,8 +235,8 @@ watch(() => route.path, (v) => {
   }
 
   .header-box-info {
-    position: absolute;
-    width: 100%;
+    position: fixed;
+    width: 185px;
     bottom: 5px;
     text-align: center;
 
