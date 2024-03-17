@@ -1,63 +1,23 @@
-# Nuxt 3 Minimal Starter
+# passerma 博客前端代码
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+网站地址：[www.passerma.com](https://www.passerma.com)
 
-## Setup
+## 开发
 
-Make sure to install the dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
+```sh
 yarn dev
 ```
 
-## Production
+## 构建
 
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
+```sh
+yarn generate
 ```
 
-Locally preview production build:
+## 部署
 
-```bash
-# npm
-npm run preview
+Jenkins 自动部署
 
-# pnpm
-pnpm run preview
+## 小程序
 
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+![passerma小程序](https://www.passerma.com/down/passerma_wechat_all.png)
