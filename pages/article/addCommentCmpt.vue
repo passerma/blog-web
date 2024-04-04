@@ -1,13 +1,13 @@
-<script setup lang="ts">
+<script setup lang="tsx">
 import { UserIcon, DeleteIcon } from 'tdesign-icons-vue-next';
 import { url2File } from 'utils/imageFun'
 import { PostBlogComments, PutBlogComments } from './fetch'
 import { UseUserInfoStore } from '~/stores';
-import { MessagePlugin } from 'tdesign-vue-next';
+import { Button, DialogPlugin, MessagePlugin } from 'tdesign-vue-next';
+import Login from '../login/loginCmpt.vue'
 
 const userInfoStore = UseUserInfoStore()
 const route = useRoute()
-const router = useRouter()
 
 const props = defineProps({
   isBlog: {
@@ -35,9 +35,11 @@ const props = defineProps({
 const commentV = ref('')
 const files = ref<any[]>([])
 const user = ref('')
+const loginVis = ref(false)
 
 let fileList: any[] = []
 let id = 0
+let loginToPost = false
 
 const userName = computed({
   get: () => {
@@ -86,18 +88,11 @@ const beforeUpload = (file: any) => {
   return false
 }
 
-const postComment = async () => {
+const postCommentNext = async () => {
+  loginToPost = false
   let userValue = user.value
   if (userInfoStore.userInfo.userName) {
     userValue = userInfoStore.userInfo.userName
-  }
-  if (commentV.value.trim() === '') {
-    MessagePlugin.info('请输入评论')
-    return
-  }
-  if (userValue.trim() === '') {
-    MessagePlugin.info('请输入用户名')
-    return
   }
   const data = new FormData()
   data.append('comment', commentV.value)
@@ -145,6 +140,42 @@ const postComment = async () => {
   }
 }
 
+const postComment = () => {
+  let userValue = user.value
+  if (userInfoStore.userInfo.userName) {
+    userValue = userInfoStore.userInfo.userName
+  }
+  if (commentV.value.trim() === '') {
+    MessagePlugin.info('请输入评论')
+    return
+  }
+  if (userValue.trim() === '') {
+    MessagePlugin.info('请输入用户名')
+    return
+  }
+  if (!userInfoStore.userInfo.userId) {
+    const confirmDia = DialogPlugin({
+      header: '提示：未登录评论后无法修改和删除',
+      body: '登录用户可以修改和删除评论，还可以收到回复的邮件提醒！！！',
+      confirmBtn: () => (
+        <Button theme="success" onClick={() => { postCommentNext(); confirmDia.destroy(); }}>直接评论</Button>
+      ),
+      cancelBtn: () => (
+        <Button theme="primary" onClick={() => {
+          loginVis.value = true;
+          loginToPost = true
+          confirmDia.destroy();
+        }}>登录/注册</Button>
+      ),
+      theme: "info",
+      closeBtn: false,
+      closeOnOverlayClick: false,
+    });
+    return
+  }
+  postCommentNext()
+}
+
 const setCommentV = (v: string, idV: number, img: string) => {
   commentV.value = v
   id = idV
@@ -166,35 +197,22 @@ const setCommentV = (v: string, idV: number, img: string) => {
 const toLogin = (e: Event) => {
   e.stopPropagation()
   e.preventDefault()
-  navigateTo({
-    path: '/login',
-    query: {
-      to: `/article/${route.params.id}`
-    },
-    replace: true
-    // state: {
-    //   user: userName.value,
-    //   value: commentV.value
-    // }
-  })
-  return
+  loginVis.value = true
+}
+
+const loginSus = () => {
+  loginVis.value = false
+  if (loginToPost) {
+    postCommentNext()
+  }
+}
+
+const loginClose = () => {
+  loginToPost = false
 }
 
 defineExpose({
   setCommentV
-})
-
-onMounted(() => {
-  // if (router.options?.history?.state) {
-  //   const user = router.options.history.state.user as string
-  //   const value = router.options.history.state.value as string
-  //   if (user) {
-  //     userName.value = user
-  //   }
-  //   if (value) {
-  //     commentV.value = value
-  //   }
-  // }
 })
 </script>
 
@@ -215,7 +233,8 @@ onMounted(() => {
 
         <template #tips>
           <span v-show="userInfoStore.userInfo.userName === ''">
-            登录用户可以收到回复的邮件提醒哦<a @click="toLogin" class="t-link" theme="primary" underline target="_self">前往登录/注册 ➡️</a>
+            登录用户可以修改和删除评论，可以收到回复的邮件提醒<a @click="toLogin" class="t-link" theme="primary" underline
+              target="_self">点击登录/注册</a>
           </span>
         </template>
       </t-textarea>
@@ -239,6 +258,10 @@ onMounted(() => {
         </t-button>
       </div>
     </div>
+    <t-dialog v-model:visible="loginVis" class="article-comment-login" destroyOnClose :footer="false" width="860px"
+      placement="center" :closeOnOverlayClick="false" :onClose="loginClose">
+      <Login :loginSus="loginSus" component />
+    </t-dialog>
   </div>
 </template>
 
@@ -384,6 +407,17 @@ onMounted(() => {
 
     .t-input__wrap {
       width: 300px;
+    }
+  }
+
+  :deep(.article-comment-login) {
+
+    .t-dialog--default {
+      padding: 20px;
+    }
+
+    .t-dialog {
+      border: none;
     }
   }
 }

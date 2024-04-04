@@ -9,6 +9,17 @@ import { SetAuthorization } from 'utils/fetch'
 import { UseUserInfoStore, UseMessageStore } from 'stores';
 import QrLoginCmpt from './qrLoginCmpt.vue'
 
+const props = defineProps({
+  component: {
+    type: Boolean,
+    default: false
+  },
+  loginSus: {
+    type: Function,
+    default: () => { }
+  }
+})
+
 const zcData = reactive({
   name: '',
   email: '',
@@ -46,7 +57,6 @@ const qrLoginCmptRef = ref<typeof QrLoginCmpt>()
 const userInfo = UseUserInfoStore()
 const message = UseMessageStore()
 const router = useRouter()
-const route = useRoute()
 
 let nextTime = 60
 let timer: NodeJS.Timeout
@@ -147,12 +157,8 @@ const register = async () => {
     MessagePlugin.success(`${res.data.userName}, 欢迎回来`)
     // 查询站内消息
     getMessageNumData()
-    const to = route.query.to as string
-    if (to) {
-      navigateTo({
-        path: to,
-        replace: true
-      })
+    if (props.component) {
+      props.loginSus()
     } else {
       router.replace('/center')
     }
@@ -286,12 +292,8 @@ const login = async () => {
   })
   MessagePlugin.closeAll()
   MessagePlugin.success(`${req2.data.userName}, 欢迎回来`)
-  const to = route.query.to as string
-  if (to) {
-    navigateTo({
-      path: to,
-      replace: true
-    })
+  if (props.component) {
+    props.loginSus()
   } else {
     router.replace('/center')
   }
@@ -445,7 +447,7 @@ onBeforeUnmount(() => {
         </button>
       </div>
     </div>
-    <QrLoginCmpt ref="qrLoginCmptRef" />
+    <QrLoginCmpt ref="qrLoginCmptRef" :loginSus="loginSus" :component="component" />
   </div>
 </template>
 

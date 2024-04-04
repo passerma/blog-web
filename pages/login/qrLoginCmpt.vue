@@ -4,6 +4,17 @@ import { GetQRCodeType, GetQRLogin, GetMessageNum } from './fetch';
 import { SetAuthorization } from 'utils/fetch'
 import { UseMessageStore, UseUserInfoStore } from 'stores';
 
+const props = defineProps({
+  component: {
+    type: Boolean,
+    default: false
+  },
+  loginSus: {
+    type: Function,
+    default: () => { }
+  }
+})
+
 const visible = ref(false)
 const url = ref('')
 const type = ref(0)
@@ -12,7 +23,6 @@ const tips = ref('')
 const userInfo = UseUserInfoStore()
 const message = UseMessageStore()
 const router = useRouter()
-const route = useRoute()
 
 let timer: NodeJS.Timeout | undefined
 let scene = ''
@@ -57,12 +67,8 @@ const getQRCodeType = () => {
             hasCode = false
             getMessageNumData()
             MessagePlugin.success(`${res.data.userName}, 欢迎回来`)
-            const to = route.query.to as string
-            if (to) {
-              navigateTo({
-                path: to,
-                replace: true
-              })
+            if (props.component) {
+              props.loginSus()
             } else {
               router.replace('/center')
             }
