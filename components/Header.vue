@@ -185,6 +185,7 @@ watch(() => route.path, (v) => {
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 16px;
       }
 
       &:last-child {

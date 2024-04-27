@@ -8,6 +8,7 @@ import {
 import { SetAuthorization } from 'utils/fetch'
 import { UseUserInfoStore, UseMessageStore } from 'stores';
 import QrLoginCmpt from './qrLoginCmpt.vue'
+import broadcastChannel from '~/utils/broadcastChannel';
 
 const props = defineProps({
   component: {
@@ -153,6 +154,15 @@ const register = async () => {
       avatar: res.data.avatar || 'https://www.passerma.com/down/morenAvatar.png',
       userId: res.data.userId
     })
+    broadcastChannel.sendMessage({
+      type: 'login',
+      data: {
+        userName: res.data.userName,
+        avatar: res.data.avatar || 'https://www.passerma.com/down/morenAvatar.png',
+        userId: res.data.userId,
+        token: res.data.token
+      }
+    })
     MessagePlugin.closeAll()
     MessagePlugin.success(`${res.data.userName}, 欢迎回来`)
     // 查询站内消息
@@ -289,6 +299,15 @@ const login = async () => {
     userName: req2.data.userName,
     avatar: req2.data.avatar || 'https://www.passerma.com/down/morenAvatar.png',
     userId: req2.data.userId
+  })
+  broadcastChannel.sendMessage({
+    type: 'login',
+    data: {
+      userName: req2.data.userName,
+      avatar: req2.data.avatar || 'https://www.passerma.com/down/morenAvatar.png',
+      userId: req2.data.userId,
+      token: req2.data.token
+    }
   })
   MessagePlugin.closeAll()
   MessagePlugin.success(`${req2.data.userName}, 欢迎回来`)

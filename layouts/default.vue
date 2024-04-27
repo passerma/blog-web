@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { UseSearchStore, UseUserInfoStore, UseMessageStore } from 'stores';
 import { GetBlogClass, GetIslogin, GetMessageNum } from './fetch';
+import broadcastChannel from '../utils/broadcastChannel'
+
+const route = useRoute()
+const router = useRouter()
 
 const userInfoStore = UseUserInfoStore()
 const searchStore = UseSearchStore()
 const messageStore = UseMessageStore()
+
 const phoneTipVisible = ref(false)
 
-onBeforeMount(async () => {
-  isLogin()
-  notPcShow()
-  getBlogClass()
-})
 
 const getMessageNum = async () => {
   const res = await GetMessageNum()
@@ -26,6 +26,10 @@ const isLogin = async () => {
     SetAuthorization(res.data.token)
     userInfoStore.setUserInfo(res.data)
     getMessageNum()
+  } else {
+    if (route.path.includes('/center')) {
+      router.replace('/login')
+    }
   }
 }
 
@@ -59,6 +63,31 @@ const getBlogClass = async () => {
     searchStore.searchClassInit(classList)
   }
 }
+
+const listenPageMsg = () => {
+  broadcastChannel.addMessageListener((data) => {
+    if (data.type === 'logout') {
+      SetAuthorization("");
+      userInfoStore.setUserInfo({ userName: "", avatar: "", userId: 0 })
+    }
+    if (data.type === 'login') {
+      const { userName, avatar, userId, token } = data.data
+      SetAuthorization(token);
+      userInfoStore.setUserInfo({ userName, avatar, userId })
+      getMessageNum()
+    }
+  })
+}
+
+onMounted(() => {
+  listenPageMsg()
+})
+
+onBeforeMount(async () => {
+  isLogin()
+  notPcShow()
+  getBlogClass()
+})
 </script>
 
 <template>

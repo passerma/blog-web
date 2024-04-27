@@ -3,6 +3,7 @@ import { MessagePlugin } from 'tdesign-vue-next';
 import { GetQRCodeType, GetQRLogin, GetMessageNum } from './fetch';
 import { SetAuthorization } from 'utils/fetch'
 import { UseMessageStore, UseUserInfoStore } from 'stores';
+import broadcastChannel from '~/utils/broadcastChannel';
 
 const props = defineProps({
   component: {
@@ -64,6 +65,15 @@ const getQRCodeType = () => {
               avatar: res.data.avatar || 'https://www.passerma.com/down/morenAvatar.png',
               userId: res.data.userId
             })
+            broadcastChannel.sendMessage({
+              type: 'login',
+              data: {
+                userName: res.data.userName,
+                avatar: res.data.avatar || 'https://www.passerma.com/down/morenAvatar.png',
+                userId: res.data.userId,
+                token: res.data.token
+              }
+            })
             hasCode = false
             getMessageNumData()
             MessagePlugin.success(`${res.data.userName}, 欢迎回来`)
@@ -121,9 +131,9 @@ defineExpose({
 <template>
   <t-dialog header="微信扫一扫" :closeOnOverlayClick="false" :closeBtn="false" :visible.sync="visible" :cancelBtn="null"
     :confirmBtn="{
-    content: '关闭',
-    variant: 'base',
-  }" :onConfirm="close">
+      content: '关闭',
+      variant: 'base',
+    }" :onConfirm="close">
     <div class="qrlogin-main">
       <t-loading size="large" :loading="!url" showOverlay>
         <img v-if="url" :src="'data:image/png;base64,' + url" />

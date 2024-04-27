@@ -2,6 +2,7 @@
 import { MessagePlugin } from 'tdesign-vue-next';
 import { GetBindInfo, Logout, PostUnbindEmail, PostbindEmail, PutLogin, ResetPass, SendFogetCode } from './fetch';
 import { UseUserInfoStore } from 'stores'
+import broadcastChannel from '~/utils/broadcastChannel';
 
 let codeTimer: any = 0
 
@@ -181,6 +182,9 @@ const logoutBtn = () => {
   SetAuthorization("");
   userInfoStore.setUserInfo({ userName: "", avatar: "", userId: 0 })
   router.replace("/login");
+  broadcastChannel.sendMessage({
+    type: "logout"
+  })
 }
 
 onMounted(async () => {
@@ -236,7 +240,8 @@ onMounted(async () => {
       <t-collapse-panel header="绑定设置">
         <div v-show="wechatBind === true" class="setting-bind">
           <span class="bind-text">微信</span><span class="bind-text">已绑定</span>
-          <ShowSCode :req="sendUnbindWeReq" title="解绑" susText="解除绑定成功" theme="danger" :complete="unindWechatComplete" />
+          <ShowSCode :req="sendUnbindWeReq" title="解绑" susText="解除绑定成功" theme="danger"
+            :complete="unindWechatComplete" />
         </div>
         <div v-show="wechatBind === false" class="setting-bind">
           <span class="bind-text">微信</span><span class="bind-text">未绑定</span>
