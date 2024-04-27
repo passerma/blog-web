@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
+const dayjs = require('dayjs')
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -55,7 +57,7 @@ export default defineNuxtConfig({
       }
     },
     define: {
-      'process.env.generate_time': JSON.stringify(process.env.generate_time || ''),
+      'process.env.generate_time': JSON.stringify(process.env.generate_time || dayjs().format('YYYY-MM-DD HH:mm:ss')),
     }
   },
   experimental: {
