@@ -18,7 +18,8 @@ export default defineNuxtConfig({
         { name: 'keywords', content: '马小葱,passerma,博客,前端,后端,全栈' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+        { rel: 'stylesheet', href: '/index.css' }
       ],
       script: [
         { src: '/theme.js' },

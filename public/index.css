@@ -1,25 +1,5 @@
-:root {
-  --article-list-bg: #fff;
-  --article-list-item-bottom: #e6e6e6;
-  --article-list-item-img-overlay-bg: #000;
-  --article-list-item-more-class-hC: #151515;
-  --article-list-item-more-class-spanC: #999;
-  --article-list-item-title-h1-color: #151515;
-  --article-list-item-title-h1-hC: #999;
-  --article-list-item-content: #666;
-  --article-list-item-content-a: #44cef6;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --article-list-bg: #121212;
-    --article-list-item-bottom: #303030;
-    --article-list-item-img-overlay-bg: #E6E6E6;
-    --article-list-item-more-class-hC: #D3D3D3;
-    --article-list-item-more-class-spanC: #757575;
-    --article-list-item-title-h1-color: #D3D3D3;
-    --article-list-item-title-h1-hC: #757575;
-    --article-list-item-content: #A3A3A3;
-    --article-list-item-content-a: #0AABD9;
-  }
+@font-face {
+  font-family: "passerma-font";
+  src: url("/font.woff") format("woff");
+  font-display: swap;
 }

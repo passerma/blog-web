@@ -55,10 +55,10 @@ watch(() => route.path, (v) => {
         </t-popup>
       </div>
       <div :class="route.path == '/' ? 'header-box-page header-box-page-select' : 'header-box-page'">
-        <NuxtLink to="/"> 首页 </NuxtLink>
+        <NuxtLink to="/" class="header-box-page-link"> 首页 </NuxtLink>
       </div>
       <div :class="route.path.startsWith('/article') ? 'header-box-page header-box-page-select' : 'header-box-page'">
-        <NuxtLink to="/article"> 文章 </NuxtLink>
+        <NuxtLink to="/article" class="header-box-page-link"> 文章 </NuxtLink>
       </div>
       <div
         :class="route.path.startsWith('/center') || route.path.startsWith('/login') ? 'header-box-page header-box-page-select' : 'header-box-page'">
@@ -68,7 +68,7 @@ watch(() => route.path, (v) => {
           </t-badge>
           <span class="header-box-page-name">{{ userInfo.userName }}</span>
         </NuxtLink>
-        <NuxtLink v-else to="/login"> 登录 </NuxtLink>
+        <NuxtLink v-else to="/login" class="header-box-page-link"> 登录 </NuxtLink>
       </div>
     </div>
     <div class="header-box-switch">
@@ -126,6 +126,8 @@ watch(() => route.path, (v) => {
     .header-box-title {
       text-align: center;
       margin-top: 15px;
+      font-family: "passerma-font";
+      letter-spacing: 2px;
       font-size: 18px;
       color: var(--td-text-color-primary);
     }
@@ -199,6 +201,11 @@ watch(() => route.path, (v) => {
         a {
           color: var(--td-brand-color);
         }
+      }
+
+      .header-box-page-link {
+        font-family: "passerma-font";
+        letter-spacing: 4px;
       }
     }
   }
