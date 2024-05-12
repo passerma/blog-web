@@ -82,13 +82,13 @@ watch(() => route.path, (v) => {
       </t-radio-group>
     </div>
     <div class="header-box-link-copy">
-      <a href="https://www.passerma.com">&copy;&nbsp;PASSERMA</a>
+      <a href="https://www.passerma.com" class="copy-name">&copy;&nbsp;PASSERMA</a>
       <a href="https://beian.miit.gov.cn/" rel="noopener noreferrer" target="_blank">浙ICP备18045684号-2</a>
       <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33011802001747" rel="noopener noreferrer"
         target="_blank">浙公网安备33011802001747号</a>
-    </div>
-    <div class="header-box-info">
-      <span v-show="generateTime !== ''">构建时间: {{ generateTime }}</span>
+      <div class="header-box-info">
+        <span v-show="generateTime !== ''">By Jenkins: {{ generateTime }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -212,7 +212,7 @@ watch(() => route.path, (v) => {
 
   .header-box-link-copy {
     position: fixed;
-    top: 440px;
+    bottom: 5px;
     text-align: center;
     width: 185px;
 
@@ -224,6 +224,21 @@ watch(() => route.path, (v) => {
 
       &:hover {
         text-decoration: underline;
+      }
+    }
+
+    .copy-name {
+      font-family: "passerma-font";
+      letter-spacing: 2px;
+    }
+
+    .header-box-info {
+      width: 185px;
+      text-align: center;
+
+      span {
+        font-size: 20px;
+        zoom: 0.5;
       }
     }
   }
@@ -242,15 +257,17 @@ watch(() => route.path, (v) => {
     }
   }
 
-  .header-box-info {
+  .header-box-switch {
     position: fixed;
+    top: 405px;
     width: 185px;
-    bottom: 5px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    span {
+    .t-icon {
       font-size: 20px;
-      zoom: 0.5;
+      transform: translateY(-1px);
     }
   }
 }
