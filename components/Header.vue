@@ -1,34 +1,46 @@
 <script setup lang="ts">
-import { LogoGithubIcon, MailIcon, BugIcon, LogoWechatStrokeIcon, SunnyIcon, MoonIcon } from 'tdesign-icons-vue-next';
-import { UseUserInfoStore, UseMessageStore, UseThemeStore } from 'stores'
-import { generateTime } from '~/utils/globalFunc'
+import {
+  LogoGithubIcon,
+  MailIcon,
+  BugIcon,
+  LogoWechatStrokeIcon,
+  SunnyIcon,
+  MoonIcon,
+} from "tdesign-icons-vue-next";
+import { UseUserInfoStore, UseMessageStore, UseThemeStore } from "stores";
+import { generateTime } from "~/utils/globalFunc";
 
-const userInfo = UseUserInfoStore().userInfo
-const useMessage = UseMessageStore()
-const themeStore = UseThemeStore()
-const route = useRoute()
-const themeModeV = ref('')
+const userInfo = UseUserInfoStore().userInfo;
+const useMessage = UseMessageStore();
+const themeStore = UseThemeStore();
+const route = useRoute();
+const themeModeV = ref("");
 
 onMounted(() => {
-  themeModeV.value = window.localStorage.getItem('theme-mode') ? 'dark' : 'light'
-  themeStore.themeSet(themeModeV.value)
-})
+  themeModeV.value = window.localStorage.getItem("theme-mode")
+    ? "dark"
+    : "light";
+  themeStore.themeSet(themeModeV.value);
+});
 
 const themeModeChange = (v: any) => {
-  if (v === 'dark') {
-    document.documentElement.setAttribute('theme-mode', 'dark');
-    window.localStorage.setItem('theme-mode', 'dark')
+  if (v === "dark") {
+    document.documentElement.setAttribute("theme-mode", "dark");
+    window.localStorage.setItem("theme-mode", "dark");
   } else {
-    document.documentElement.removeAttribute('theme-mode');
-    window.localStorage.removeItem('theme-mode')
+    document.documentElement.removeAttribute("theme-mode");
+    window.localStorage.removeItem("theme-mode");
   }
-  themeStore.themeSet(v)
-}
+  themeStore.themeSet(v);
+};
 
-watch(() => route.path, (v) => {
-  const el = document.getElementById('__nuxt')
-  el && (el.scrollTop = 0);
-})
+watch(
+  () => route.path,
+  (v) => {
+    const el = document.getElementById("__nuxt");
+    el && (el.scrollTop = 0);
+  }
+);
 </script>
 <template>
   <div class="header">
@@ -45,30 +57,40 @@ watch(() => route.path, (v) => {
         <a href="https://www.passerma.com/article/1/#comment-form" target="_blank">
           <BugIcon />
         </a>
-        <t-popup placement="right" showArrow>
+        <!-- <t-popup placement="right" showArrow>
           <LogoWechatStrokeIcon />
           <template #content>
             <div class="header-box-link-wechat">
               <img src="https://www.passerma.com/down/passerma_wechat_all.png" />
             </div>
           </template>
-        </t-popup>
+</t-popup> -->
       </div>
-      <div :class="route.path == '/' ? 'header-box-page header-box-page-select' : 'header-box-page'">
+      <div :class="route.path == '/'
+        ? 'header-box-page header-box-page-select'
+        : 'header-box-page'
+        ">
         <NuxtLink to="/" class="header-box-page-link"> 首页 </NuxtLink>
       </div>
-      <div :class="route.path.startsWith('/article') ? 'header-box-page header-box-page-select' : 'header-box-page'">
+      <div :class="route.path.startsWith('/article')
+        ? 'header-box-page header-box-page-select'
+        : 'header-box-page'
+        ">
         <NuxtLink to="/article" class="header-box-page-link"> 文章 </NuxtLink>
       </div>
-      <div
-        :class="route.path.startsWith('/center') || route.path.startsWith('/login') ? 'header-box-page header-box-page-select' : 'header-box-page'">
+      <div :class="route.path.startsWith('/center') || route.path.startsWith('/login')
+        ? 'header-box-page header-box-page-select'
+        : 'header-box-page'
+        ">
         <NuxtLink v-if="userInfo.userName !== ''" to="/center">
           <t-badge class="header-box-page-img" :count="useMessage.message.messageNum" size="small">
             <img :src="userInfo.avatar" />
           </t-badge>
           <span class="header-box-page-name">{{ userInfo.userName }}</span>
         </NuxtLink>
-        <NuxtLink v-else to="/login" class="header-box-page-link"> 登录 </NuxtLink>
+        <NuxtLink v-else to="/login" class="header-box-page-link">
+          登录
+        </NuxtLink>
       </div>
     </div>
     <div class="header-box-switch">

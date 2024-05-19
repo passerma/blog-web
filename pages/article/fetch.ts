@@ -30,7 +30,7 @@ export type BlogComment = {
   child: BlogComment[]
 }
 
-export type BlogDetail = {
+type BlogDetail = {
   beauti: number
   bgurl: string
   blog_type: number

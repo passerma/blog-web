@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { MessagePlugin } from 'tdesign-vue-next'
 import List from './listCmpt.vue'
-import { GetBlogList, BlogListType } from './fetch'
+import { GetBlogList, type BlogListType } from './fetch'
 import { UseSearchStore } from 'stores';
 
 const searchStore = UseSearchStore()

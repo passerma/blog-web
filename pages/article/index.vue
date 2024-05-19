@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RocketIcon, GridViewIcon, BrowseIcon } from 'tdesign-icons-vue-next';
 import dayjs from 'dayjs'
-import { BlogListType, GetBlogList } from './fetch'
+import { type BlogListType, GetBlogList } from './fetch'
 import { translateText } from '~/utils/globalFunc'
 import { GetBlogLook } from '../fetch'
 import { UseSearchStore } from 'stores'

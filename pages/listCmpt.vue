@@ -2,7 +2,7 @@
 import { RocketIcon, GridViewIcon, BrowseIcon } from 'tdesign-icons-vue-next';
 import dayjs from 'dayjs'
 import { translateText } from 'utils/globalFunc'
-import { BlogListType, GetBlogLook } from './fetch'
+import { GetBlogLook, type BlogListType } from './fetch'
 
 type Props = {
   list: BlogListType['blogs']
@@ -50,8 +50,8 @@ onMounted(async () => {
             <span v-if="index % 2" class="index-list-item-more-class">
               <GridViewIcon />
               {{
-        item.class
-      }}
+                item.class
+              }}
             </span>
             <span>
               <RocketIcon />

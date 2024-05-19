@@ -53,7 +53,7 @@ export default defineNuxtConfig({
             return path.replace(/^\/api\//, '')
           },
         },
-        '/img/': 'http://106.14.184.137:4002',
+        '/img/': 'http://127.0.0.1:4002',
         '/cdn.nlark.com/': 'http://127.0.0.1:4003'
       }
     },

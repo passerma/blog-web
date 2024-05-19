@@ -230,7 +230,6 @@ defineExpose({
     </div>
     <div class="article-comment-form-text">
       <t-textarea v-model="commentV" placeholder="请输入评论">
-
         <template #tips>
           <span v-show="userInfoStore.userInfo.userName === ''">
             登录用户可以修改和删除评论，可以收到回复的邮件提醒<a @click="toLogin" class="t-link" theme="primary" underline
@@ -303,8 +302,6 @@ defineExpose({
 
     :deep(.t-textarea__info_wrapper) {
       margin: 0;
-      margin-bottom: 5px;
-      min-height: 5px;
 
       .t-textarea__tips {
         margin: 0;
@@ -349,6 +346,7 @@ defineExpose({
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
+    margin-bottom: 8px;
 
     .article-comment-form-upload-img {
       width: 25%;

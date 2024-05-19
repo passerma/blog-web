@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import {
   ChatAddIcon, EditIcon, DeleteIcon, BrowseIcon
 } from 'tdesign-icons-vue-next';
-import { GetBlogComments, BlogComment, DelBlogComment } from './fetch'
+import { GetBlogComments, type BlogComment, DelBlogComment } from './fetch'
 import AddCommentCmpt from './addCommentCmpt.vue'
 import { UseUserInfoStore } from '~/stores';
 import { MessagePlugin } from 'tdesign-vue-next';
@@ -211,15 +211,15 @@ onUpdated(() => {
             </t-image-viewer>
           </div>
           <div :class="item.child.length > 0
-      ? 'article-comment-item-content-text article-comment-item-content-text-border'
-      : 'article-comment-item-content-text'
-      ">
+            ? 'article-comment-item-content-text article-comment-item-content-text-border'
+            : 'article-comment-item-content-text'
+            ">
             {{ item.comment }}
           </div>
           <div v-show="item.id === editId" :class="item.child.length === 0 && index === comment.length - 1
-      ? 'article-comment-item-content-form article-comment-item-content-form-border'
-      : 'article-comment-item-content-form'
-      ">
+            ? 'article-comment-item-content-form article-comment-item-content-form-border'
+            : 'article-comment-item-content-form'
+            ">
             <AddCommentCmpt :ref="(el) => setCommentRef(el, `comment_${item.id}`)" :to-user="item.id" :parent="item.id"
               :update-comment="getcomment" :close-comment="closeComment" />
           </div>
@@ -267,8 +267,8 @@ onUpdated(() => {
                 </span>
                 <span v-if="item2.user_id !== null && useUserInfo.userInfo.userId === item2.user_id"
                   class="article-comment-item-content-more-re" @click="
-      editComment(item2.id, item2.comment, item2.comment_img)
-      ">
+                    editComment(item2.id, item2.comment, item2.comment_img)
+                    ">
                   <EditIcon />
                   修改
                 </span>
@@ -282,9 +282,9 @@ onUpdated(() => {
               </div>
               <div class="article-comment-item-content-text">
                 <span class="text-re" v-if="item2.parent &&
-      item2.parent !== item2.to_user &&
-      commentNames[item2.parent]
-      " @mouseenter="() => reCommentMouse(item2.parent, 'enter')"
+                  item2.parent !== item2.to_user &&
+                  commentNames[item2.parent]
+                " @mouseenter="() => reCommentMouse(item2.parent, 'enter')"
                   @mouseleave="() => reCommentMouse(item2.parent, 'leave')">
                   {{ `@${commentNames[item2.parent]}` }}
                   <br />
