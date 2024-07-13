@@ -244,7 +244,6 @@ onUpdated(() => {
               <div class="article-comment-item-content-name">
                 <t-popup showArrow destroyOnClose :delay="100" :disabled="item2.user_id === null" placement="right-top">
                   <span style="cursor: pointer;">{{ item2.user_name || item2.user }}</span>
-
                   <template #content>
                     <div class="article-comment-user-info">
                       <img :src="item2.avatar" />

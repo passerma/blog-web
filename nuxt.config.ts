@@ -26,12 +26,12 @@ export default defineNuxtConfig({
         { src: "/baidu.js" },
         { src: "/md_font.js" }
       ]
-    },
-    // pageTransition: { name: 'page', mode: 'out-in' }
+    }
   },
   alias: {
     "utils": `${__dirname}/utils`,
-    "stores": `${__dirname}/stores`
+    "stores": `${__dirname}/stores`,
+    "assets": `${__dirname}/assets`
   },
   typescript: {
     tsConfig: {

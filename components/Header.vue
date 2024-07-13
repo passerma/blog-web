@@ -9,6 +9,7 @@ import {
 } from "tdesign-icons-vue-next";
 import { UseUserInfoStore, UseMessageStore, UseThemeStore } from "stores";
 import { generateTime } from "~/utils/globalFunc";
+import wechatPng from 'assets/wechat.jpg'
 
 const userInfo = UseUserInfoStore().userInfo;
 const useMessage = UseMessageStore();
@@ -57,14 +58,14 @@ watch(
         <a href="https://www.passerma.com/article/1/#comment-form" target="_blank">
           <BugIcon />
         </a>
-        <!-- <t-popup placement="right" showArrow>
+        <t-popup placement="right" showArrow>
           <LogoWechatStrokeIcon />
           <template #content>
             <div class="header-box-link-wechat">
-              <img src="https://www.passerma.com/down/passerma_wechat_all.png" />
+              <img :src="wechatPng" />
             </div>
           </template>
-</t-popup> -->
+        </t-popup>
       </div>
       <div :class="route.path == '/'
         ? 'header-box-page header-box-page-select'
@@ -295,7 +296,7 @@ watch(
 }
 
 .header-box-link-wechat {
-  width: 500px;
+  width: 300px;
 
   img {
     width: 100%;
