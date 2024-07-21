@@ -1,5 +1,6 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { type AxiosRequestConfig } from 'axios'
 import { MessagePlugin } from 'tdesign-vue-next'
+import Log from './log'
 
 // 返回结果类型
 export interface resType<T> {
@@ -67,7 +68,7 @@ export default function Fetch<T = any>(
     axios(obj).then((res) => {
       resolve(res.data)
     }).catch((err) => {
-      console.error(err)
+      Log.error(`请求失败：${path}`, err)
       resolve(null)
     })
   })

@@ -2,6 +2,7 @@
 import { UseSearchStore, UseUserInfoStore, UseMessageStore } from 'stores';
 import { GetBlogClass, GetIslogin, GetMessageNum } from './fetch';
 import broadcastChannel from '../utils/broadcastChannel'
+import Log from 'utils/log'
 
 const route = useRoute()
 const router = useRouter()
@@ -23,10 +24,12 @@ const getMessageNum = async () => {
 const isLogin = async () => {
   const res = await GetIslogin()
   if (res && res.code === 0) {
+    Log.success('isLogin?', '用户已登录')
     SetAuthorization(res.data.token)
     userInfoStore.setUserInfo(res.data)
     getMessageNum()
   } else {
+    Log.warning('isLogin?', '用户未登录')
     if (route.path.includes('/center')) {
       router.replace('/login')
     }
